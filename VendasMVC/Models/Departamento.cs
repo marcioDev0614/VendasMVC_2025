@@ -27,7 +27,7 @@ namespace VendasMVC.Models
 
         public double TotalVendas(DateTime inicial, DateTime final)
         {
-            return Vendedores.Sum(vendedor => vendedor.TotalVendas(inicial, final));
+            return Vendedores.Sum(x => x.TotalVendas(inicial, final));
         }
     }
 }
