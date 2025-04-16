@@ -14,8 +14,8 @@ namespace VendasMVC.Data
 
         }
 
-        DbSet<Departamento> Departamento { get; set; }
-        DbSet<Vendedor> Vendedor { get; set; }
-        DbSet<RegistroVenda> Venda { get; set; }
+        public DbSet<Departamento> Departamento { get; set; }
+        public DbSet<Vendedor> Vendedor { get; set; }
+        public DbSet<RegistroVenda> Venda { get; set; }
     }
 }
