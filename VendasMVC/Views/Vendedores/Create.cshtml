@@ -1,0 +1,40 @@
+﻿@model VendasMVC.Models.Vendedor
+
+@{
+
+    ViewData["Title"] = "Adicionar novo";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Nome" class="custom-control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Email" class="custom-control-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="DataAniversario" class="custom-control-label"></label>
+                <input asp-for="DataAniversario" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="SalarioBase" class="custom-control-label"></label>
+                <input asp-for="SalarioBase" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Crear</button>
+            </div>
+        </form>
+    </div>
+</div>

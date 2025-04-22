@@ -13,6 +13,7 @@ namespace VendasMVC.Models
         public DateTime DataAniversario { get; set; }
         public double SalarioBase { get; set; }
         public Departamento Departamento { get; set; }
+        public int DepartamentoId { get; set; }
         public ICollection<RegistroVenda> Vendas { get; set; } = new List<RegistroVenda>();
 
         public Vendedor() { }

@@ -5,11 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using VendasMVC.Data;
+using VendasMVC.Services;
 
 namespace VendasMVC
 {
@@ -28,6 +25,7 @@ namespace VendasMVC
             services.AddEntityFrameworkSqlServer().AddDbContext<BancoContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DataBase")));
             services.AddControllersWithViews();
             services.AddScoped<ServicoEnvio>();
+            services.AddScoped<VendedorServico>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
