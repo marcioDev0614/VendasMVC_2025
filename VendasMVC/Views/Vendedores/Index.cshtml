@@ -1,0 +1,49 @@
+﻿@model IEnumerable<VendasMVC.Models.Vendedor>
+
+@{
+    ViewData["Title"] = "Lista de vendedores";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Adicionar novo</a>
+</p>
+
+<br />
+
+<table class="table table-striped table-hover" id="table-vendedores">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(x => x.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x => x.Email)
+            </th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+            @foreach (Vendedor vendedor in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => vendedor.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => vendedor.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@vendedor.Id" class="btn btn-primary">Editar</a>
+                <a asp-action="Datails" asp-route-id="@vendedor.Id" class="btn btn-dark">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@vendedor.Id" class="btn btn-danger">Deletar</a>
+            </td>
+        </tr>
+
+            }
+    </tbody>
+</table>
