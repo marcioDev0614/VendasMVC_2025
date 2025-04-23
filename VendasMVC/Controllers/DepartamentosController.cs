@@ -5,24 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using VendasMVC.Models;
 using VendasMVC.Data;
+using VendasMVC.Services;
 
 namespace VendasMVC.Controllers
 {
     public class DepartamentosController : Controller
-
     {
 
-        private readonly BancoContext _bancoContext;
+        private readonly DepartamentoServico _departamentoServico;
 
-        public DepartamentosController(BancoContext bancoContext)
+        public DepartamentosController(DepartamentoServico departamentoServico)
         {
-            _bancoContext = bancoContext;
+            _departamentoServico = departamentoServico;
         }
 
         public IActionResult Index()
         {
-            List<Departamento> list = _bancoContext.Departamento.ToList();
-            
+            List<Departamento> list = _departamentoServico.BuscarTodos();
+
             return View(list);
         }
     }

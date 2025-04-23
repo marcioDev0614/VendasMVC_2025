@@ -1,4 +1,4 @@
-﻿@model VendasMVC.Models.Vendedor
+﻿@model VendasMVC.Models.ViewModels.VendedorFormViewModel
 
 @{
 
@@ -13,23 +13,28 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="Nome" class="custom-control-label"></label>
-                <input asp-for="Nome" class="form-control" />
+                <label asp-for="Vendedor.Nome" class="custom-control-label"></label>
+                <input asp-for="Vendedor.Nome" class="form-control" />
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="Email" class="custom-control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <label asp-for="Vendedor.Email" class="custom-control-label"></label>
+                <input asp-for="Vendedor.Email" class="form-control" />
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="DataAniversario" class="custom-control-label"></label>
-                <input asp-for="DataAniversario" class="form-control" />
+                <label asp-for="Vendedor.DataAniversario" class="custom-control-label"></label>
+                <input asp-for="Vendedor.DataAniversario" class="form-control" />
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="SalarioBase" class="custom-control-label"></label>
-                <input asp-for="SalarioBase" class="form-control" />
+                <label asp-for="Vendedor.SalarioBase" class="custom-control-label"></label>
+                <input asp-for="Vendedor.SalarioBase" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Vendedor.DepartamentoId" class="control-label"></label>
+                <select asp-for="Vendedor.DepartamentoId" asp-items="@(new SelectList(Model.Departamentos,"Id","Nome"))" class="form-control"></select>
             </div>
             <br />
             <div class="form-group">
