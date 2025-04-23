@@ -27,5 +27,17 @@ namespace VendasMVC.Services
             _bancoContext.Add(vendedor);
             _bancoContext.SaveChanges();
         }
+
+        public Vendedor BuscarPorId(int id)
+        {
+            return _bancoContext.Vendedor.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Remove(int id)
+        {
+            var obj = _bancoContext.Vendedor.Find(id);
+            _bancoContext.Vendedor.Remove(obj);
+            _bancoContext.SaveChanges();
+        }
     }
 }
