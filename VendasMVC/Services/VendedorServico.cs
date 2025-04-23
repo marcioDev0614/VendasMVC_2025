@@ -23,7 +23,7 @@ namespace VendasMVC.Services
 
         public void Insert(Vendedor vendedor)
         {
-            vendedor.Departamento = _bancoContext.Departamento.First();
+            //vendedor.Departamento = _bancoContext.Departamento.First();
             _bancoContext.Add(vendedor);
             _bancoContext.SaveChanges();
         }

@@ -23,6 +23,9 @@
             <th>
                 @Html.DisplayNameFor(x => x.Email)
             </th>
+            <th>
+                @Html.DisplayNameFor(x => x.SalarioBase)
+            </th>
             <th scope="col">Ações</th>
         </tr>
     </thead>
@@ -36,6 +39,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => vendedor.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => vendedor.SalarioBase)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@vendedor.Id" class="btn btn-primary">Editar</a>
