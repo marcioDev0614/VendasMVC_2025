@@ -8,6 +8,7 @@ using VendasMVC.Data;
 using VendasMVC.Services;
 using VendasMVC.Models.ViewModels;
 using VendasMVC.Services.Exeptions;
+using System.Diagnostics;
 
 namespace VendasMVC.Controllers
 {
@@ -41,23 +42,23 @@ namespace VendasMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Vendedor vendedor)
-        {               
+        {
             _vendedorServico.Insert(vendedor);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Deletar(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
             var obj = _vendedorServico.BuscarPorId(id.Value);
 
-            if(obj == null)
+            if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             return View(obj);
@@ -75,14 +76,14 @@ namespace VendasMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
             var obj = _vendedorServico.BuscarPorId(id.Value);
 
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             return View(obj);
@@ -90,16 +91,16 @@ namespace VendasMVC.Controllers
 
         public IActionResult Editar(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
             var obj = _vendedorServico.BuscarPorId(id.Value);
 
-            if(obj == null)
+            if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             List<Departamento> departamentos = _departamentoServico.BuscarTodos();
@@ -112,9 +113,9 @@ namespace VendasMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Editar(int id, Vendedor vendedor)
         {
-            if(id != vendedor.Id)
+            if (id != vendedor.Id)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             }
 
             try
@@ -123,15 +124,22 @@ namespace VendasMVC.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            catch (NotFoudException)
+            catch (ApplicationException e)
             {
 
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch (DbConcurrencyException)
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
             {
-                return BadRequest();
-            }
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
 
     }
