@@ -7,6 +7,7 @@ using VendasMVC.Models;
 using VendasMVC.Data;
 using VendasMVC.Services;
 using VendasMVC.Models.ViewModels;
+using VendasMVC.Services.Exeptions;
 
 namespace VendasMVC.Controllers
 {
@@ -68,6 +69,69 @@ namespace VendasMVC.Controllers
         {
             _vendedorServico.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Detalhes(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _vendedorServico.BuscarPorId(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        public IActionResult Editar(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _vendedorServico.BuscarPorId(id.Value);
+
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            List<Departamento> departamentos = _departamentoServico.BuscarTodos();
+            VendedorFormViewModel viewModel = new VendedorFormViewModel { Vendedor = obj, Departamentos = departamentos };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(int id, Vendedor vendedor)
+        {
+            if(id != vendedor.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                _vendedorServico.Update(vendedor);
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (NotFoudException)
+            {
+
+                return NotFound();
+            }
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
         }
 
     }
