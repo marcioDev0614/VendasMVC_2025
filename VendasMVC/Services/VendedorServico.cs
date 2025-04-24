@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using VendasMVC.Data;
 using VendasMVC.Models;
+using Microsoft.EntityFrameworkCore;
+using VendasMVC.Services.Exeptions;
 
 namespace VendasMVC.Services
 {
@@ -30,7 +32,7 @@ namespace VendasMVC.Services
 
         public Vendedor BuscarPorId(int id)
         {
-            return _bancoContext.Vendedor.FirstOrDefault(x => x.Id == id);
+            return _bancoContext.Vendedor.Include(x => x.Departamento).FirstOrDefault(x => x.Id == id);
         }
 
         public void Remove(int id)
@@ -38,6 +40,28 @@ namespace VendasMVC.Services
             var obj = _bancoContext.Vendedor.Find(id);
             _bancoContext.Vendedor.Remove(obj);
             _bancoContext.SaveChanges();
+        }
+
+        public void Update(Vendedor vendedor)
+        {
+            if (!_bancoContext.Vendedor.Any(x => x.Id == vendedor.Id))
+            {
+                throw new NotFoudException("Id não encontrado");
+            }
+
+            try
+            {
+
+                _bancoContext.Update(vendedor);
+                _bancoContext.SaveChanges();
+
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+
+                throw new DbConcurrencyException(e.Message);
+            }
+
         }
     }
 }

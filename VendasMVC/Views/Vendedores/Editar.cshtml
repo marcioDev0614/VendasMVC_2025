@@ -2,7 +2,7 @@
 
 @{
 
-    ViewData["Title"] = "Adicionar novo";
+    ViewData["Title"] = "Editar";
 
 }
 
@@ -11,7 +11,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Editar">
+            <input type="hidden" asp-for="Vendedor.Id" />
             <div class="form-group">
                 <label asp-for="Vendedor.Nome" class="custom-control-label"></label>
                 <input asp-for="Vendedor.Nome" class="form-control" />
@@ -38,7 +39,7 @@
             </div>
             <br />
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Crear</button>
+                <button type="submit" class="btn btn-primary btn-block">Editar</button>
                 <a asp-action="Index">Voltar para a lista</a>
             </div>
         </form>
