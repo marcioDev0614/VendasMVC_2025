@@ -24,45 +24,45 @@ namespace VendasMVC.Controllers
             _departamentoServico = departamentoServico;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            var list = _vendedorServico.BuscarTodos();
+            var list = await _vendedorServico.BuscarTodosAsync();
 
             return View(list);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var departamentos = _departamentoServico.BuscarTodos();
+            var departamentos = await _departamentoServico.BuscarTodosAsync();
             var viewModel = new VendedorFormViewModel { Departamentos = departamentos };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Vendedor vendedor)
+        public async Task<IActionResult> Create(Vendedor vendedor)
         {
 
             if (!ModelState.IsValid)
             {
-                var departamentos = _departamentoServico.BuscarTodos();
+                var departamentos = await _departamentoServico.BuscarTodosAsync();
                 var viewModel = new VendedorFormViewModel { Departamentos = departamentos, Vendedor = vendedor };
                 return View(viewModel);
             }
 
-            _vendedorServico.Insert(vendedor);
+            await _vendedorServico.InsertAsync(vendedor);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Deletar(int? id)
+        public async Task<IActionResult> Deletar(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _vendedorServico.BuscarPorId(id.Value);
+            var obj = await _vendedorServico.BuscarPorIdAsync(id.Value);
 
             if (obj == null)
             {
@@ -74,20 +74,20 @@ namespace VendasMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Deletar(int id)
+        public async Task<IActionResult> Deletar(int id)
         {
-            _vendedorServico.Remove(id);
+            await _vendedorServico.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Detalhes(int? id)
+        public async Task<IActionResult> Detalhes(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _vendedorServico.BuscarPorId(id.Value);
+            var obj = await _vendedorServico.BuscarPorIdAsync(id.Value);
 
             if (obj == null)
             {
@@ -97,21 +97,21 @@ namespace VendasMVC.Controllers
             return View(obj);
         }
 
-        public IActionResult Editar(int? id)
+        public async Task<IActionResult> Editar(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _vendedorServico.BuscarPorId(id.Value);
+            var obj = await _vendedorServico.BuscarPorIdAsync(id.Value);
 
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            List<Departamento> departamentos = _departamentoServico.BuscarTodos();
+            List<Departamento> departamentos = await _departamentoServico.BuscarTodosAsync();
             VendedorFormViewModel viewModel = new VendedorFormViewModel { Vendedor = obj, Departamentos = departamentos };
 
             return View(viewModel);
@@ -119,12 +119,12 @@ namespace VendasMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Editar(int id, Vendedor vendedor)
+        public async Task<IActionResult> Editar(int id, Vendedor vendedor)
         {
 
             if (!ModelState.IsValid)
             {
-                var departamentos = _departamentoServico.BuscarTodos();
+                var departamentos = await _departamentoServico.BuscarTodosAsync();
                 var viewModel = new VendedorFormViewModel { Departamentos = departamentos, Vendedor = vendedor };
                 return View(viewModel);
             }
@@ -136,7 +136,7 @@ namespace VendasMVC.Controllers
 
             try
             {
-                _vendedorServico.Update(vendedor);
+                await _vendedorServico.UpdateAsync(vendedor);
                 return RedirectToAction(nameof(Index));
 
             }

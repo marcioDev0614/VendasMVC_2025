@@ -31,9 +31,8 @@
             <td scope="row">@department.Id</td>
             <td scope="row">@department.Nome</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@department.Id" class="btn btn-primary">Editar</a>
-                <a asp-action="Datails" asp-route-id="@department.Id" class="btn btn-dark">Detalhes</a>
-                <a asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">Deletar</a>
+                <a asp-action="Editar" asp-route-id="@department.Id" class="btn btn-primary">Editar</a>
+                <a asp-action="Deletar" asp-route-id="@department.Id" class="btn btn-danger">Deletar</a>
             </td>
         </tr>
 

@@ -1,0 +1,34 @@
+﻿@model VendasMVC.Models.Departamento
+
+@{
+
+    ViewData["Title"] = "Adicionar novo";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Departamento</label>
+                <br />
+                <input asp-for="Nome" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
+                <a asp-action="Index">Voltar para a lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
