@@ -37,9 +37,18 @@ namespace VendasMVC.Services
 
         public async Task RemoveAsync(int id)
         {
-            var obj = await _bancoContext.Vendedor.FindAsync(id);
-            _bancoContext.Vendedor.Remove(obj);
-            await _bancoContext.SaveChangesAsync();
+            try
+            {
+                var obj = await _bancoContext.Vendedor.FindAsync(id);
+                _bancoContext.Vendedor.Remove(obj);
+                await _bancoContext.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException)
+            {
+
+                throw new IntegratyException("Desculpe, a exclusão não será possível, pois o vendedor possui registro de venda.");
+            }
         }
 
         public async Task UpdateAsync(Vendedor vendedor)
